@@ -129,3 +129,75 @@ public class AreaCalculator
 }
 
 ```
+
+## Liskov Substitution
+
+Objects created from a subclass should be able to take the place of objects 
+created from the parent class without causing any issues in the program.
+
+### BAD Example:
+
+```c#
+public class Rectangle
+{
+    public virtual int Width { get; set; }
+    public virtual int Height { get; set; }
+
+    public int CalculateArea()
+    {
+        return Width * Height;
+    }
+}
+
+public class Square : Rectangle
+{
+    private int _side;
+
+    public override int Width
+    {
+        get { return _side; }
+        set { _side = value; }
+    }
+
+    public override int Height
+    {
+        get { return _side; }
+        set { _side = value; }
+    }
+}
+
+```
+
+### GOOD example:
+
+```c#
+public interface IShape
+{
+    int CalculateArea();
+}
+
+public class Rectangle : IShape
+{
+    public int Width { get; set; }
+    public int Height { get; set; }
+
+    public int CalculateArea()
+    {
+        return Width * Height;
+    }
+}
+
+public class Square : IShape
+{
+    public int SideLength { get; set; }
+
+    public int CalculateArea()
+    {
+        return SideLength * SideLength;
+    }
+}
+
+```
+
+
+
